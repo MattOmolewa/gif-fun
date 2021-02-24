@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Loader from "./Loader";
 
 const Giphy = () => {
   const [gifs, setGifs] = useState([]);
@@ -28,9 +29,7 @@ const Giphy = () => {
     <div className="container">
       <div className="card-columns">
         {loading ? (
-          <span>
-            <i className="fas fa-spinner"></i>
-          </span>
+          <Loader />
         ) : (
           gifs.map(gif => (
             <div className="card" key={gif.id}>
