@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -7,19 +6,25 @@ const Giphy = () => {
 
   async function getGifs() {
     try {
-      axios.get("api.giphy.com/v1/gifs/trending", {
+      const result = await axios.get("https://api.giphy.com/v1/gifs/trending", {
         params: {
           api_key: "V43NFKCMq3I1DObR3NbMXyUOj2Qe8mBU",
         },
       });
+      setGifs(result.data.data);
     } catch (error) {
       console.error(error.message);
     }
   }
 
+  useEffect(() => {
+    getGifs();
+    console.log(gifs);
+  }, []);
+
   return (
     <div>
-      <span></span>
+      <span>hello wro</span>
     </div>
   );
 };
