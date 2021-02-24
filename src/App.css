@@ -17,7 +17,8 @@
 
 } */
 
-span i {
+.loader {
   color: purple;
   text-align: center;
+  margin-top: 150px;
 }

@@ -2,9 +2,9 @@ import React from "react";
 
 const Loader = () => {
   return (
-    <span>
-      <i className="fas fa-spinner fa-6x fa-spin"></i>
-    </span>
+    <div className="loader">
+      <i className="fas fa-spinner fa-7x fa-spin"></i>
+    </div>
   );
 };
 

@@ -25,22 +25,22 @@ const Giphy = () => {
     // console.log(gifs);
   }, []);
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="container">
       <div className="card-columns">
-        {loading ? (
-          <Loader />
-        ) : (
-          gifs.map(gif => (
-            <div className="card" key={gif.id}>
-              <img
-                className="card-img-top"
-                src={gif.images.fixed_height.url}
-                alt="gif"
-              />
-            </div>
-          ))
-        )}
+        {gifs.map(gif => (
+          <div className="card" key={gif.id}>
+            <img
+              className="card-img-top"
+              src={gif.images.fixed_height.url}
+              alt="gif"
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
