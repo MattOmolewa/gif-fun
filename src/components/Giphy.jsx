@@ -3,6 +3,7 @@ import axios from "axios";
 
 const Giphy = () => {
   const [gifs, setGifs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   async function getGifs() {
     try {
@@ -12,6 +13,7 @@ const Giphy = () => {
         },
       });
       setGifs(result.data.data);
+      setLoading(false);
     } catch (error) {
       console.error(error.message);
     }
@@ -19,12 +21,28 @@ const Giphy = () => {
 
   useEffect(() => {
     getGifs();
-    console.log(gifs);
+    // console.log(gifs);
   }, []);
 
   return (
-    <div>
-      <span>hello wro</span>
+    <div className="container">
+      <div className="card-columns">
+        {loading ? (
+          <span>
+            <i className="fas fa-spinner"></i>
+          </span>
+        ) : (
+          gifs.map(gif => (
+            <div className="card" key={gif.id}>
+              <img
+                className="card-img-top"
+                src={gif.images.fixed_height.url}
+                alt="gif"
+              />
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };
