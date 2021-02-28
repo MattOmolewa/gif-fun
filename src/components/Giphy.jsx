@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./Loader";
+import Pagination from "./Pagination";
 
 const Giphy = () => {
   const [gifs, setGifs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState("");
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   async function getGifs() {
     try {
-      const result = await axios.get(
-        "https://1api.giphy.com/v1/gifs/trending",
-        {
-          params: {
-            api_key: "V43NFKCMq3I1DObR3NbMXyUOj2Qe8mBU",
-          },
-        }
-      );
+      const result = await axios.get("https://api.giphy.com/v1/gifs/trending", {
+        params: {
+          api_key: "V43NFKCMq3I1DObR3NbMXyUOj2Qe8mBU",
+          limit: 200,
+        },
+      });
       setGifs(result.data.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.error(error.message);
+      // console.error(error.message);
       setIsError(error.message);
     }
   }
@@ -36,11 +40,16 @@ const Giphy = () => {
     return <Loader />;
   }
   if (gifs.length == 0) {
-    return <p>{isError}</p>;
+    return <p>{isError}, please refresh after a moment</p>;
   }
 
   return (
     <div className="container">
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={gifs.length}
+      />
       <div className="card-columns">
         {gifs.map(gif => (
           <div className="card" key={gif.id}>
