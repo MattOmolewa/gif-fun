@@ -1,6 +1,11 @@
 import React from "react";
 
-const Pagination = ({ currentPage, itemsPerPage, totalItems }) => {
+const Pagination = ({
+  currentPage,
+  pageSelected,
+  itemsPerPage,
+  totalItems,
+}) => {
   const pageNumber = [];
 
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
@@ -9,10 +14,10 @@ const Pagination = ({ currentPage, itemsPerPage, totalItems }) => {
 
   return (
     <nav>
-      <ul class="pagination">
-        {pageNumber.map(num => (
-          <li class="page-item">
-            <a class="page-link" href="#">
+      <ul className="pagination d-flex justify-content-end">
+        {pageNumber.map((num, i) => (
+          <li key={i} className="page-item">
+            <a onClick={() => pageSelected(num)} className="page-link" href="#">
               {num}
             </a>
           </li>

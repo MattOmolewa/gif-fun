@@ -13,12 +13,13 @@ const Giphy = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
+  const currentItems = gifs.slice(indexOfFirstItem, indexOfLastItem);
+
   async function getGifs() {
     try {
       const result = await axios.get("https://api.giphy.com/v1/gifs/trending", {
         params: {
           api_key: "V43NFKCMq3I1DObR3NbMXyUOj2Qe8mBU",
-          limit: 200,
         },
       });
       setGifs(result.data.data);
@@ -35,8 +36,12 @@ const Giphy = () => {
     // console.log(gifs);
   }, []);
 
+  function pageSelected(pgNumber) {
+    setCurrentPage(pgNumber);
+  }
+
   if (loading) {
-    console.log(gifs.length);
+    // console.log(gifs.length);
     return <Loader />;
   }
   if (gifs.length == 0) {
@@ -49,9 +54,11 @@ const Giphy = () => {
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         totalItems={gifs.length}
+        pageSelected={pageSelected}
       />
       <div className="card-columns">
-        {gifs.map(gif => (
+        {/* {console.log(gifs.length)} */}
+        {currentItems.map(gif => (
           <div className="card" key={gif.id}>
             <img
               className="card-img-top"
