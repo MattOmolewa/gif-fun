@@ -23,7 +23,7 @@ const Giphy = () => {
       const result = await axios.get("https://api.giphy.com/v1/gifs/search", {
         params: {
           api_key: "JP1OvUHMi2m0g8X77qCvq1bG2tMA3qkf",
-          q: text ? text : "great",
+          q: text || "great",
           limit: 100,
         },
       });
