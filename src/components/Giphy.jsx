@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "./Loader";
 import Pagination from "./Pagination";
+import Input from "./Input";
 
 const Giphy = () => {
   const [gifs, setGifs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState("");
+  //input state
+  const [text, setText] = useState("");
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
@@ -17,9 +20,11 @@ const Giphy = () => {
 
   async function getGifs() {
     try {
-      const result = await axios.get("https://api.giphy.com/v1/gifs/trending", {
+      const result = await axios.get("https://api.giphy.com/v1/gifs/search", {
         params: {
-          api_key: "V43NFKCMq3I1DObR3NbMXyUOj2Qe8mBU",
+          api_key: "JP1OvUHMi2m0g8X77qCvq1bG2tMA3qkf",
+          q: text ? text : "great",
+          limit: 100,
         },
       });
       setGifs(result.data.data);
@@ -39,6 +44,10 @@ const Giphy = () => {
   function pageSelected(pgNumber) {
     setCurrentPage(pgNumber);
   }
+  function handleSubmit(e) {
+    e.preventDefault();
+    getGifs();
+  }
 
   if (loading) {
     // console.log(gifs.length);
@@ -50,6 +59,7 @@ const Giphy = () => {
 
   return (
     <div className="container">
+      <Input text={text} setText={setText} handleSubmit={handleSubmit} />
       <Pagination
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}

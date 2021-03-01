@@ -30,7 +30,8 @@ const Pagination = ({
                 {num}
               </a>
             </li>
-        ))}
+          );
+        })}
       </ul>
     </nav>
   );
